@@ -14,11 +14,12 @@ resource "aws_transfer_server" "this" {
     vpc_id                 = var.vpc_id
     security_group_ids     = var.security_group_ids
     address_allocation_ids = var.address_allocation_ids
+  }
   tags = var.tags
 }
 
 resource "aws_route53_record" "this" {
-  count    = var.create_route53_record ? 1 : 0
+  count = var.create_route53_record ? 1 : 0
 
   name    = var.route53_record_name
   type    = "CNAME"
