@@ -1,14 +1,14 @@
 # terraform-aws-transfer
-Terraform Module for AWS Transfer for SFTP.  
+Terraform Module for AWS Transfer for SFTP.
 
-This module aims to cover all connotations of setting up a AWS Transfer for SFTP Server along with users. 
+This module aims to cover all connotations of setting up a AWS Transfer for SFTP Server along with users.
 
 The following resources are supported:
 * aws_transfer_server
 * aws_transfer_user
 * aws_transfer_ssh_key
 
-This Module will optionally create a Route53 CNAME Record for the server endpoint & also the IAM logging role. 
+This Module will optionally create a Route53 CNAME Record for the server endpoint & also the IAM logging role.
 There's also some ability to create an internet facing Transfer service using the VPC.
 Terraform doesn't currently support this functionality, but this current PR is open [Terraform PR]("https://github.com/terraform-providers/terraform-provider-aws/pull/11751)
 
@@ -50,14 +50,14 @@ module "transfer_user_key_bodys" {
 
 
 ## Terraform Versions
-This module supports Terraform v0.11 from v0.0.1   
+This module supports Terraform v0.11 from v0.0.1
 This module supports Terraform v0.12 from v0.2.0
 This module supports Terraform v0.13 from v0.3.0
 
 ## Authors
-Module managed by  
-[Rob Houghton](https://github.com/ALLFIVE)  
-[Josh Sinfield](https://github.com/JoshiiSinfield)  
+Module managed by
+[Rob Houghton](https://github.com/ALLFIVE)
+[Josh Sinfield](https://github.com/JoshiiSinfield)
 
 ## Notes
 The ability to setup custom/password auth is currently still in WIP in PR #3

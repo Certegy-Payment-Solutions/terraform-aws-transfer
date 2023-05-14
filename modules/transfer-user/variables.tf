@@ -1,6 +1,6 @@
 variable "transfer_server_id" {
   description = "ID of the AWs Transfer Server"
-  default = ""
+  default     = ""
 }
 
 variable "user_name" {

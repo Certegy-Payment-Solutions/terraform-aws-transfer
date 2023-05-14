@@ -5,7 +5,7 @@ resource "aws_iam_role" "this_transfer" {
   count              = var.create_transfer_iam_role ? 1 : 0
   assume_role_policy = data.aws_iam_policy_document.transfer_trust_policy.json
   name               = var.transfer_iam_role_name
-  tags               = merge({
+  tags = merge({
     Name = var.transfer_iam_role_name, Role = "${var.transfer_iam_role_name} iam role"
   }, var.tags)
 }
@@ -23,10 +23,10 @@ resource "aws_iam_role" "this_lambda" {
   count              = var.create_lambda_iam_role ? 1 : 0
   assume_role_policy = data.aws_iam_policy_document.lambda_trust_policy.json
   name               = var.lambda_iam_role_name
-  tags               = merge({
+  tags = merge({
     Name = var.lambda_iam_role_name,
     Role = "${var.lambda_iam_role_name} iam role"
-  }, var.tags )
+  }, var.tags)
 }
 
 resource "aws_iam_role_policy" "inline_policy" {
@@ -120,10 +120,10 @@ resource "aws_api_gateway_model" "get_user_response_model" {
   name         = "UserConfigResponseModel"
   description  = "API response for GetUserConfig"
   rest_api_id  = aws_api_gateway_rest_api.this.id
-  schema       = jsonencode({
-    "$schema"  = "http://json-schema.org/draft-04/schema#"
-    title      = "UserUserConfig"
-    type       = "object"
+  schema = jsonencode({
+    "$schema" = "http://json-schema.org/draft-04/schema#"
+    title     = "UserUserConfig"
+    type      = "object"
     properties = {
       HomeDirectory = {
         type = "string"
@@ -135,7 +135,7 @@ resource "aws_api_gateway_model" "get_user_response_model" {
         type : "string"
       }
       PublicKeys = {
-        type  = "array"
+        type = "array"
         items = {
           type = "string"
         }
@@ -145,10 +145,10 @@ resource "aws_api_gateway_model" "get_user_response_model" {
 }
 
 resource "aws_api_gateway_method" "get_user_config" {
-  authorization      = "AWS_IAM"
-  http_method        = "GET"
-  resource_id        = aws_api_gateway_resource.user_config.id
-  rest_api_id        = aws_api_gateway_rest_api.this.id
+  authorization = "AWS_IAM"
+  http_method   = "GET"
+  resource_id   = aws_api_gateway_resource.user_config.id
+  rest_api_id   = aws_api_gateway_rest_api.this.id
   //  depends_on         = [aws_api_gateway_model.get_user_response_model]
   request_parameters = {
     "method.request.header.Password"      = false
@@ -157,10 +157,10 @@ resource "aws_api_gateway_method" "get_user_config" {
   }
 }
 resource "aws_api_gateway_method_response" "get_user_config_response" {
-  http_method     = aws_api_gateway_method.get_user_config.http_method
-  resource_id     = aws_api_gateway_resource.user_config.id
-  rest_api_id     = aws_api_gateway_rest_api.this.id
-  status_code     = "200"
+  http_method = aws_api_gateway_method.get_user_config.http_method
+  resource_id = aws_api_gateway_resource.user_config.id
+  rest_api_id = aws_api_gateway_rest_api.this.id
+  status_code = "200"
   response_models = {
     "application/json" = "UserConfigResponseModel"
   }
@@ -173,8 +173,8 @@ resource "aws_api_gateway_integration" "get_user_config_post_integration" {
   rest_api_id             = aws_api_gateway_rest_api.this.id
   type                    = "AWS"
   # arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/<lamba invoke arn>
-  uri                     = aws_lambda_function.this_lambda.invoke_arn
-  request_templates       = {
+  uri = aws_lambda_function.this_lambda.invoke_arn
+  request_templates = {
     "application/json" = "{ \"username\": \"$input.params('username')\", \"password\": \"$util.escapeJavaScript($input.params('Password')).replaceAll(\"\\\\'\",\"'\")\", \"serverId\": \"$input.params('serverId')\", \"protocol\": \"$input.params('protocol')\",\"sourceIp\": \"$input.params('sourceIp')\" }"
   }
 }
@@ -194,10 +194,10 @@ resource "aws_api_gateway_stage" "prod" {
   deployment_id = aws_api_gateway_deployment.this.id
   rest_api_id   = aws_api_gateway_rest_api.this.id
   stage_name    = var.api_gateway_stage_name
-  tags          = merge({
+  tags = merge({
     Name = "${aws_api_gateway_rest_api.this.name} stage ${var.api_gateway_stage_name}",
     Role = "${aws_api_gateway_rest_api.this.name} stage ${var.api_gateway_stage_name}"
-  }, var.tags
+    }, var.tags
   )
 }
 

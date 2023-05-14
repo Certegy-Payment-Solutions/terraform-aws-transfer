@@ -9,10 +9,10 @@ module "server" {
 resource "aws_s3_bucket" "home_bucket" {}
 
 
-data aws_iam_policy_document "user_role_policy_statements" {
+data "aws_iam_policy_document" "user_role_policy_statements" {
   statement {
-    sid       = "AllowS3Access"
-    actions   = [
+    sid = "AllowS3Access"
+    actions = [
       "s3:ListBucket",
       "s3:GetBucketLocation"
     ]
@@ -20,27 +20,27 @@ data aws_iam_policy_document "user_role_policy_statements" {
     resources = [aws_s3_bucket.home_bucket.arn]
   }
   statement {
-    sid       = "PutObjectPermission"
-    actions   = [
+    sid = "PutObjectPermission"
+    actions = [
       "s3:PutObject",
       "s3:GetObject",
       "s3:DeleteObjectVersion",
       "s3:DeleteObject",
       "s3:GetObjectVersion"
     ]
-    effect    = "Allow"
+    effect = "Allow"
     resources = [
       "${aws_s3_bucket.home_bucket.arn}/folder/*"
     ]
   }
   statement {
-    sid       = "KMSPerms"
-    actions   = [
+    sid = "KMSPerms"
+    actions = [
       "kms:GenerateDataKey*",
       "kms:Encrypt",
       "kms:Decrypt"
     ]
-    effect    = "Allow"
+    effect = "Allow"
     resources = [
       "*"
     ]
@@ -55,7 +55,7 @@ module "user" {
   add_transfer_ssh_keys      = true
   use_ssm                    = true
   transfer_ssh_key_ssm_paths = ["/test/base/path/test-user-1"]
-  home_directory_mappings    = {
+  home_directory_mappings = {
     entry  = "/"
     target = "/${aws_s3_bucket.home_bucket.bucket}/test/homedir"
   }

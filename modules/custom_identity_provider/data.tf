@@ -3,7 +3,7 @@ data "aws_region" "current" {}
 
 data "aws_iam_policy_document" "lambda_trust_policy" {
   statement {
-    effect  = "Allow"
+    effect = "Allow"
     principals {
       identifiers = ["lambda.amazonaws.com"]
       type        = "Service"
@@ -13,7 +13,7 @@ data "aws_iam_policy_document" "lambda_trust_policy" {
 }
 data "aws_iam_policy_document" "transfer_trust_policy" {
   statement {
-    effect  = "Allow"
+    effect = "Allow"
     principals {
       identifiers = ["transfer.amazonaws.com"]
       type        = "Service"
@@ -26,8 +26,8 @@ data "aws_iam_policy_document" "lambda_inline_policy" {
   count = var.create_lambda_iam_role ? 1 : 0
 
   statement {
-    effect    = "Allow"
-    actions   = [
+    effect = "Allow"
+    actions = [
       "secretsmanager:GetSecretValue"
     ]
     resources = [
@@ -40,9 +40,9 @@ data "aws_iam_policy_document" "transfer_inline_policy" {
   count = var.create_transfer_iam_role ? 1 : 0
 
   statement {
-    sid       = "AllowTransferInvokeApi"
-    effect    = "Allow"
-    actions   = [
+    sid    = "AllowTransferInvokeApi"
+    effect = "Allow"
+    actions = [
       "execute-api:Invoke"
     ]
     resources = [
@@ -51,9 +51,9 @@ data "aws_iam_policy_document" "transfer_inline_policy" {
   }
 
   statement {
-    sid       = "AllowTransferReadAPI"
-    effect    = "Allow"
-    actions   = [
+    sid    = "AllowTransferReadAPI"
+    effect = "Allow"
+    actions = [
       "apigateway:GET"
     ]
     resources = ["*"]

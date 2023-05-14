@@ -5,7 +5,7 @@ provider "aws" {
 
 data "aws_iam_policy_document" "assume_role" {
   statement {
-    effect  = "Allow"
+    effect = "Allow"
     principals {
       identifiers = ["transfer.amazonaws.com"]
       type        = "Service"
@@ -16,7 +16,7 @@ data "aws_iam_policy_document" "assume_role" {
 
 data "aws_iam_policy_document" "cw_policy" {
   statement {
-    effect  = "Allow"
+    effect = "Allow"
     actions = [
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
@@ -34,7 +34,7 @@ resource "aws_route53_zone" "test" {
 }
 resource "aws_iam_role" "logging" {
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
-  path = "/"
+  path               = "/"
 }
 resource "aws_iam_role_policy" "logging_policy" {
   role   = aws_iam_role.logging.id
@@ -47,7 +47,7 @@ module "test" {
   create_route53_record = true
   route53_record_zone   = aws_route53_zone.test.zone_id
   route53_record_name   = "sftp.test-zone.co.uk"
-  iam_path = "/"
+  iam_path              = "/"
 }
 
 output "r53_record_fqdn" {
