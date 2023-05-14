@@ -78,7 +78,7 @@ variable "dns_role_arn" {
 
 variable "iam_path" {
   description = "IAM Path applied to IAM role"
-  default     = ""
+  default     = "/"
 }
 
 variable "aws_region" {
