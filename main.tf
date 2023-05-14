@@ -14,7 +14,7 @@ resource "aws_transfer_server" "this" {
     subnet_ids             = var.subnet_ids
     vpc_id                 = var.vpc_id
     security_group_ids     = var.security_group_ids
-    address_allocation_ids = var.address_allocation_ids
+    address_allocation_ids = length(var.address_allocation_ids) > 0 ? var.address_allocation_ids : [aws_eip.this[*].id]
   }
   tags = var.tags
 }
