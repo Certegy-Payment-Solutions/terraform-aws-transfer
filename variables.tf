@@ -27,9 +27,6 @@ variable "identity_provider_type" {
   description = "Type of identitiy provider used within the transfer service"
   default     = "SERVICE_MANAGED"
 }
-variable "identity_provider_details" {
-  description = "Identity provider details"
-}
 
 variable "tags" {
   description = "Tags to apply to resource"

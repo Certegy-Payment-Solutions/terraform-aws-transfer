@@ -1,8 +1,7 @@
 resource "aws_transfer_server" "this" {
   count = var.create_transfer_server ? 1 : 0
 
-  identity_provider_type    = var.identity_provider_type
-  identity_provider_details = var.identity_provider_details
+  identity_provider_type = var.identity_provider_type
 
   logging_role    = var.create_transfer_logging_role == true ? aws_iam_role.logging[0].arn : var.logging_role_arn
   endpoint_type   = var.endpoint_type
